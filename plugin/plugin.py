@@ -1,3 +1,6 @@
+#Graphics by Army
+
+
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
 from Screens.VirtualKeyBoard import VirtualKeyBoard
@@ -17,16 +20,9 @@ import string
 
 class SetPasswdMain(Screen, ConfigListScreen):
 	skin = """
-		<screen position="center,center" size="585,250" title="Set Root Password" >
-		<widget name="config" position="10,10" size="565,200" scrollbarMode="showOnDemand" />
-		<ePixmap pixmap="skin_default/buttons/red.png" position="5,210" size="140,40" alphatest="on" />
-		<ePixmap pixmap="skin_default/buttons/green.png" position="150,210" size="140,40" alphatest="on" />
-		<ePixmap pixmap="skin_default/buttons/yellow.png" position="295,210" size="140,40" alphatest="on" />
-		<ePixmap pixmap="skin_default/buttons/blue.png" position="440,210" size="140,40" alphatest="on" />
-		<widget name="key_red" position="5,210" zPosition="1" size="140,40" font="Regular;17" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
-		<widget name="key_green" position="150,210" zPosition="1" size="140,40" font="Regular;17" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
-		<widget name="key_yellow" position="295,210" zPosition="1" size="140,40" font="Regular;17" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
-		<widget name="key_blue" position="440,210" zPosition="1" size="140,40" font="Regular;17" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
+		<screen position="center,center" size="800,600" title="Set Root Password" flags="wfNoBorder" >
+		<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/ChangeRootPassword/backg.png" position="0,0" size="800,600" alphatest="on" />
+		<widget name="config" position="100,200" zPosition="1" size="600,60" scrollbarMode="showOnDemand" transparent="1" />
 	</screen>"""
 
 	def __init__(self, session):
@@ -93,8 +89,9 @@ class SetPasswdMain(Screen, ConfigListScreen):
 
 class SetPasswdDo(Screen):
 	skin = """
-		<screen position="center,center" size="520,400" title="Set Root Password" >
-			<widget name="lab" position="0,0" size="520,400" font="Regular;20" />
+		<screen position="center,center" size="700,424" title="Set Root Password" flags="wfNoBorder" >
+			<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/ChangeRootPassword/backg2.png" position="0,0" size="700,424" alphatest="on" />
+			<widget name="lab" position="40,20" size="620,384" font="Regular;20" zPosition="1" transparent="1" />
 		</screen>"""
 
 	def __init__(self, session, oldp, newp):
@@ -147,5 +144,5 @@ def main(session, **kwargs):
 	session.open(SetPasswdMain)
 
 def Plugins(**kwargs):
-	return PluginDescriptor(name="Change root password", description=_("Change the root password of your box"), where = PluginDescriptor.WHERE_PLUGINMENU, fnc=main)
+	return PluginDescriptor(name="Change root password", description="Change the root password of your box", icon="icon.png", where = PluginDescriptor.WHERE_PLUGINMENU, fnc=main)
 	
