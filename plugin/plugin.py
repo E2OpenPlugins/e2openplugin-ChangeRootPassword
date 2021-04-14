@@ -13,7 +13,7 @@ from Components.Label import Label
 from Components.Pixmap import Pixmap
 from Components.Sources.List import List
 from Plugins.Plugin import PluginDescriptor
-from random import Random 
+from random import Random
 from telnetlib import Telnet
 import string
 
@@ -27,11 +27,11 @@ class SetPasswdMain(Screen, ConfigListScreen):
 
 	def __init__(self, session):
 		Screen.__init__(self, session)
-		
+
 		self.skin = SetPasswdMain.skin
 		self.list = []
 		ConfigListScreen.__init__(self, self.list)
-		
+
 		self["key_red"] = Label(_("Set Password"))
 		self["key_green"] = Label(_("Generate"))
 		self["key_yellow"] = Label(_("Virtual Keyb"))
@@ -45,37 +45,36 @@ class SetPasswdMain(Screen, ConfigListScreen):
 			"blue": self.close,
 			"cancel": self.close
 		}, -1)
-	
+
 		self.newpass = self.buildPass()
-		self.oldp = NoSave(ConfigText(fixed_size = False, default = ""))
-		self.newp = NoSave(ConfigText(fixed_size = False, default = self.newpass))
+		self.oldp = NoSave(ConfigText(fixed_size=False, default=""))
+		self.newp = NoSave(ConfigText(fixed_size=False, default=self.newpass))
 		self.updateList()
-	
+
 	def updateList(self):
 		self.list = []
 		self.list.append(getConfigListEntry('Enter old Password', self.oldp))
 		self.list.append(getConfigListEntry('Enter new Password', self.newp))
 		self["config"].list = self.list
 		self["config"].l.setList(self.list)
-		
+
 	def buildPass(self):
 		passwd = string.letters + string.digits
-		return ''.join(Random().sample(passwd, 8)) 
+		return ''.join(Random().sample(passwd, 8))
 
 	def greenPressed(self):
 		self.newp.value = self.buildPass()
 		self.updateList()
-		
+
 	def yellowPressed(self):
 		sel = self["config"].getCurrent()
 		value = self.oldp.value
 		self.valuetype = 0
 		if sel[0] == "Enter new Password":
 			value = self.newp.value
-			self.valuetype = 1	
+			self.valuetype = 1
 		self.session.openWithCallback(self.virtualKeybDone, VirtualKeyBoard, title=sel[0], text=value)
-		
-	
+
 	def virtualKeybDone(self, passw):
 		if self.valuetype == 0:
 			self.oldp.value = passw
@@ -96,19 +95,19 @@ class SetPasswdDo(Screen):
 
 	def __init__(self, session, oldp, newp):
 		Screen.__init__(self, session)
-				
+
 		self["lab"] = Label("")
 		self["actions"] = ActionMap(["WizardActions"],
 			{
 				"ok": self.end,
 				"back": self.end,
 			}, -1)
-		
+
 		self.oldp = oldp
 		self.newp = newp
 		self.connected = True
 		self.connect()
-		
+
 	def connect(self):
 		tn = Telnet("localhost")
 		out = tn.read_until("login:", 3)
@@ -131,18 +130,18 @@ class SetPasswdDo(Screen):
 		else:
 			out += "\nLogin incorrect, wrong password."
 			tn.close()
-		
+
 		self.connected = False
 		self["lab"].setText(out)
-	
+
 	def end(self):
 		if self.connected == False:
 			self.close()
 
-		
+
 def main(session, **kwargs):
 	session.open(SetPasswdMain)
 
+
 def Plugins(**kwargs):
-	return PluginDescriptor(name="Change root password", description="Change the root password of your box", icon="icon.png", where = PluginDescriptor.WHERE_PLUGINMENU, fnc=main)
-	
+	return PluginDescriptor(name="Change root password", description="Change the root password of your box", icon="icon.png", where=PluginDescriptor.WHERE_PLUGINMENU, fnc=main)
