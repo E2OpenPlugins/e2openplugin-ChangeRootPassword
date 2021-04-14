@@ -47,8 +47,8 @@ class SetPasswdMain(Screen, ConfigListScreen):
 		}, -1)
 	
 		self.newpass = self.buildPass()
-		self.oldp = NoSave(ConfigText(fixed_size = False, default = ""))
-		self.newp = NoSave(ConfigText(fixed_size = False, default = self.newpass))
+		self.oldp = NoSave(ConfigText(fixed_size=False, default=""))
+		self.newp = NoSave(ConfigText(fixed_size=False, default=self.newpass))
 		self.updateList()
 	
 	def updateList(self):
@@ -144,5 +144,5 @@ def main(session, **kwargs):
 	session.open(SetPasswdMain)
 
 def Plugins(**kwargs):
-	return PluginDescriptor(name="Change root password", description="Change the root password of your box", icon="icon.png", where = PluginDescriptor.WHERE_PLUGINMENU, fnc=main)
+	return PluginDescriptor(name="Change root password", description="Change the root password of your box", icon="icon.png", where=PluginDescriptor.WHERE_PLUGINMENU, fnc=main)
 	
