@@ -1,7 +1,7 @@
 from distutils.core import setup, Extension
 
 pkg = 'Extensions.ChangeRootPassword'
-setup (name='enigma2-plugin-extensions-changerootpassword',
+setup(name='enigma2-plugin-extensions-changerootpassword',
        version='0.1',
        license='GPLv2',
        url='https://github.com/E2OpenPlugins',
