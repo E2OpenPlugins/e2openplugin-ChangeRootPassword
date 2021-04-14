@@ -75,7 +75,6 @@ class SetPasswdMain(Screen, ConfigListScreen):
 			self.valuetype = 1	
 		self.session.openWithCallback(self.virtualKeybDone, VirtualKeyBoard, title=sel[0], text=value)
 		
-	
 	def virtualKeybDone(self, passw):
 		if self.valuetype == 0:
 			self.oldp.value = passw
@@ -142,6 +141,7 @@ class SetPasswdDo(Screen):
 		
 def main(session, **kwargs):
 	session.open(SetPasswdMain)
+
 
 def Plugins(**kwargs):
 	return PluginDescriptor(name="Change root password", description="Change the root password of your box", icon="icon.png", where=PluginDescriptor.WHERE_PLUGINMENU, fnc=main)
