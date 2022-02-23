@@ -111,25 +111,25 @@ class SetPasswdDo(Screen):
 		
 	def connect(self):
 		tn = Telnet("localhost")
-		out = tn.read_until("login:", 3)
-		tn.write("root\n")
-		check = tn.read_until("Password:", 2)
+		out = tn.read_until(b"login:", 3)
+		tn.write(b"root\n")
+		check = tn.read_until(b"Password:", 2)
 		out += check
-		if check.__contains__("Password:"):
-			tn.write(self.oldp + "\n")
-			check = tn.read_until("~#", 2)
+		if check.__contains__(b"Password:"):
+			tn.write(self.oldp.encode() + b"\n")
+			check = tn.read_until(b"~#", 2)
 			out += check
-		if check.__contains__("~#"):
-			tn.write("passwd\n")
-			out += tn.read_until("password", 2)
-			tn.write(self.newp + "\n")
-			out += tn.read_until("password", 2)
-			tn.write(self.newp + "\n")
-			out += tn.read_until("xxx", 1)
-			tn.write("exit\n")
+		if check.__contains__(b"~#"):
+			tn.write(b"passwd\n")
+			out += tn.read_until(b"password", 2)
+			tn.write(self.newp.encode() + b"\n")
+			out += tn.read_until(b"password", 2)
+			tn.write(self.newp.encode() + b"\n")
+			out += tn.read_until(b"xxx", 1)
+			tn.write(b"exit\n")
 			out += tn.read_all()
 		else:
-			out += "\nLogin incorrect, wrong password."
+			out += b"\nLogin incorrect, wrong password."
 			tn.close()
 		
 		self.connected = False
