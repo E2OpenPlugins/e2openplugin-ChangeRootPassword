@@ -59,7 +59,7 @@ class SetPasswdMain(Screen, ConfigListScreen):
 		self["config"].l.setList(self.list)
 		
 	def buildPass(self):
-		passwd = string.letters + string.digits
+		passwd = string.ascii_letters + string.digits
 		return ''.join(Random().sample(passwd, 8)) 
 
 	def greenPressed(self):
@@ -72,7 +72,7 @@ class SetPasswdMain(Screen, ConfigListScreen):
 		self.valuetype = 0
 		if sel[0] == "Enter new Password":
 			value = self.newp.value
-			self.valuetype = 1	
+			self.valuetype = 1
 		self.session.openWithCallback(self.virtualKeybDone, VirtualKeyBoard, title=sel[0], text=value)
 		
 	
